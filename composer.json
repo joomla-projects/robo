@@ -1,0 +1,22 @@
+{
+  "name": "joomla-projects/robo",
+  "description": "Robo tasks for Joomla Quality Assurance",
+  "keywords": ["robo", "task", "bdd"],
+  "require": {
+    "php": ">=5.4.0",
+    "codegyre/robo": "~0.5",
+    "guzzlehttp/guzzle": "~5.0"
+  },
+  "license": "GPL-2.0+",
+  "authors": [
+    {
+      "name": "Javier",
+      "email": "javier.gomez@community.joomla.org"
+    }
+  ],
+  "autoload": {
+    "psr-4": {
+      "joomla_projects\\robo\\": "src"
+    }
+  }
+}
