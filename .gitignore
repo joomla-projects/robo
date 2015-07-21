@@ -34,7 +34,6 @@ build.properties
 phing-latest.phar
 
 # Composer
-composer.lock
 composer.phar
 vendor/*
 
