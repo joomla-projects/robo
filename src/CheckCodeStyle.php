@@ -31,6 +31,7 @@ class CheckCodeStyle extends BaseTask implements TaskInterface
 	public function __construct()
 	{
 		$this->ignore_errors_on_exit = false;
+		$this->ignored = array();
 	}
 
 	public function ignore($path)
