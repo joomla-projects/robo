@@ -25,7 +25,7 @@ use Symfony\Component\Process\Process;
  * Class WaitForSeleniumStandaloneServerTask
  * @package joomla_projects\robo
  */
-class checkCodeStyle extends BaseTask implements TaskInterface
+class CheckCodeStyle extends BaseTask implements TaskInterface
 {
 	use Timer;
 
