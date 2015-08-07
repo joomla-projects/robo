@@ -20,5 +20,13 @@ trait loadTasks {
     {
         return new WaitForSeleniumStandaloneServer();
     }
+
+    /**
+     * @return CheckCodeStyle
+     */
+    protected function taskCheckCodeStyle()
+    {
+        return new CheckCodeStyle();
+    }
 }
 
