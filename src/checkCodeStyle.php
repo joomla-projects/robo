@@ -27,70 +27,91 @@ use Symfony\Component\Process\Process;
  */
 class checkCodeStyle extends BaseTask implements TaskInterface
 {
-    use Timer;
+	use Timer;
 
-    public function ignore($path)
-    {
-        $this->ignored[] = $path;
+	public function __construct()
+	{
+		$this->ignore_errors_on_exit = false;
+	}
 
-        return $this;
-    }
+	public function ignore($path)
+	{
+		$this->ignored[] = $path;
+
+		return $this;
+	}
 
 
-    public function inspect($path)
-    {
-        $this->files[] = $path;
+	public function inspect($path)
+	{
+		$this->files[] = $path;
 
-        return $this;
-    }
+		return $this;
+	}
 
-    public function standard($path = null)
-    {
-        $this->standard[] = $path;
+	public function standard($path = null)
+	{
+		$this->standard[] = $path;
 
-        return $this;
-    }
+		return $this;
+	}
 
-    /**
-     * @return Result
-     */
-    public function run()
-    {
-        $this->startTimer();
+	public function dontStopOnFail($option = false)
+	{
+		$this->ignore_errors_on_exit = $option;
 
-        if (!isset($this->standard))
-        {
-            $this->standard[] = $this->getJoomlaCodingSniffers();
-        }
+		return $this;
+	}
 
-        $this->printTaskInfo('Initialising CodeSniffer Checks...');
+	/**
+	 * @return Result
+	 */
+	public function run()
+	{
+		$this->startTimer();
 
-        // Build the options for the sniffer
-        $options = array(
-            'files' => $this->files,
-            'standard' => $this->standard,
-            'ignored' => $this->ignored,
-            'showProgress' => true,
-            'verbosity' => false
-        );
+		if (!isset($this->standard))
+		{
+			$this->standard[] = $this->getJoomlaCodingSniffers();
+		}
 
-        // Instantiate the sniffer
-        $phpcs = new \PHP_CodeSniffer_CLI;
+		$this->printTaskInfo('Initialising CodeSniffer Checks...');
 
-        // Ensure PHPCS can run, will exit if requirements aren't met
-        $phpcs->checkRequirements();
+		// Build the options for the sniffer
+		$options = array(
+			'files' => $this->files,
+			'standard' => $this->standard,
+			'ignored' => $this->ignored,
+			'showProgress' => true,
+			'verbosity' => false,
+			'ignore_errors_on_exit' => $this->ignore_errors_on_exit
+		);
 
-        // Run the sniffs
-        $numErrors = $phpcs->process($options);
+		// Instantiate the sniffer
+		$phpcs = new \PHP_CodeSniffer_CLI;
 
-        $this->stopTimer();
+		// Ensure PHPCS can run, will exit if requirements aren't met
+		$phpcs->checkRequirements();
 
-        if ($numErrors)
-        {
-            return \Robo\Result::error($this, "There were $numErrors issues detected.");
-        }
+		// Run the sniffs
+		$numErrors = $phpcs->process($options);
 
-        $this->say("There were no code style issues detected.");
-        return new Result($this, 0, "There were no code style issues detected.", ['time' => $this->getExecutionTime()]);
-    }
+		$this->stopTimer();
+
+		$message = 'There were no code style issues detected.';
+		$exitCode = 0;
+
+		if ($numErrors)
+		{
+			$message = "There were $numErrors issues detected.";
+			$exitCode = 1;
+		}
+
+		if ($this->ignore_errors_on_exit)
+		{
+			$exitCode = 0;
+		}
+
+		return new Result($this, $exitCode, $message, ['time' => $this->getExecutionTime()]);
+	}
 }

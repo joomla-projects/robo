@@ -79,3 +79,5 @@ Use it like this in your RoboFile.php:
 			->stopOnFail();
 	}
 ```
+
+use `dontStopOnFail(true)` to always exit(0). Valid to avoid travis failing.
