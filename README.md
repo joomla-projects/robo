@@ -1,4 +1,4 @@
-# robo
+# Robo
 
 robo.li tasks for joomla
 
@@ -8,7 +8,7 @@ Add this requirements to your composer.json:
 
 ```
     "require-dev": {
-        "codegyre/robo": "^0.5.3",
+        "codegyre/robo": "^1.0.5",
         "joomla-projects/robo": "dev-master"
     }
 ```
