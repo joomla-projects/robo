@@ -18,7 +18,7 @@ trait loadTasks {
      */
     protected function taskWaitForSeleniumStandaloneServer()
     {
-        return new WaitForSeleniumStandaloneServer();
+		return $this->task(WaitForSeleniumStandaloneServer::class);
     }
 
     /**
