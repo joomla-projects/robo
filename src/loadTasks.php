@@ -12,21 +12,25 @@ namespace joomla_projects\robo;
  * Trait loadTasks
  * @package joomla_projects\robo
  */
-trait loadTasks {
-    /**
-     * @return WaitForSeleniumStandaloneServer
-     */
-    protected function taskWaitForSeleniumStandaloneServer()
-    {
+trait loadTasks
+{
+	/**
+	 * Task wait for Selenium Standalone Server
+	 *
+	 * @return WaitForSeleniumStandaloneServer
+	 */
+	protected function taskWaitForSeleniumStandaloneServer()
+	{
 		return $this->task(WaitForSeleniumStandaloneServer::class);
-    }
+	}
 
-    /**
-     * @return CheckCodeStyle
-     */
-    protected function taskCheckCodeStyle()
-    {
-        return new CheckCodeStyle();
-    }
+	/**
+	 * Task wait for Check code style
+	 *
+	 * @return CheckCodeStyle
+	 */
+	protected function taskCheckCodeStyle()
+	{
+		return new CheckCodeStyle;
+	}
 }
-
